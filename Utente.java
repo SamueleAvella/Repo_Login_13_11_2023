@@ -1,16 +1,22 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Utente {
     String nome;
     String cognome;
     String email;
-    String nome_utente;
-    String hashPassword;
+    String nomeUtente;
+    String password;
+    LocalDate dataNascita;
+    String residenza;
+    Genere sesso;
 
-    public Utente(String nome, String cognome, String email, String nome_utente, String hashPassword) {
+    public Utente(String nome, String cognome, String email, String nome_utente, String password) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;
-        this.nome_utente=nome_utente;
-        this.hashPassword=hashPassword;
+        this.nomeUtente=nome_utente;
+        this.password=password;
     }
     public String getNome() {
         return nome;
@@ -21,13 +27,22 @@ public class Utente {
     public String getEmail() {
         return email;
     }
-    public String getNome_utente() {
-        return nome_utente;
+    public String getNomeUtente() {
+        return nomeUtente;
     }
-    public String getHashPassword() {
-        return hashPassword;
+    public String getPassword() {
+        return password;
     }
-    /*public void setNome(String nome) {
+    public LocalDate getDataNascita() {
+        return dataNascita;
+    }
+    public String getResidenza() {
+        return residenza;
+    }
+    public Genere getSesso() {
+        return sesso;
+    }
+    public void setNome(String nome) {
         this.nome = nome;
     }
     public void setCognome(String cognome) {
@@ -36,20 +51,12 @@ public class Utente {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setNome_utente(String nome_utente) {
-        this.nome_utente = nome_utente;
+    public void setNomeUtente(String nome_utente) {
+        this.nomeUtente = nome_utente;
     }
-    public void setPassword(String hashgPassword) {
-        this.hashPassword = hashPassword;
+    public void setSesso(Genere sesso) {
+        this.sesso = sesso;
     }
-    @Override
-    public String toString() {
-        String descrizione ="";
-        descrizione+= "Nome: "+ this.nome;
-        descrizione+= "Cognome: "+ this.cognome;
-        descrizione+= "Email: "+ this.email;
-        descrizione+= "Nome utente: "+ this.nome_utente;
-        descrizione+= "Password segreta :)";
-        return descrizione;
-    }*/
+    
+    
 }
