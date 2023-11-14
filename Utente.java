@@ -2,20 +2,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Utente {
-    String nome;
-    String cognome;
-    String email;
-    String nomeUtente;
-    String password;
-    LocalDate dataNascita;
-    String residenza;
-    Genere sesso;
+    private String nome;
+    private String cognome;
+    private String email;
+    private String nomeUtente;
+    private String password;
+    private LocalDate dataNascita;
+    private String residenza;
+    private Genere sesso;
 
-    public Utente(String nome, String cognome, String email, String nome_utente, String password) {
+    public Utente(String nome, String cognome, String email, String nomeUtente, String password) {
         this.nome=nome;
         this.cognome=cognome;
         this.email=email;
-        this.nomeUtente=nome_utente;
+        this.nomeUtente=nomeUtente;
         this.password=password;
     }
     public String getNome() {
@@ -51,8 +51,8 @@ public class Utente {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setNomeUtente(String nome_utente) {
-        this.nomeUtente = nome_utente;
+    public void setNomeUtente(String nomeUtente) {
+        this.nomeUtente = nomeUtente;
     }
     public void setSesso(Genere sesso) {
         this.sesso = sesso;

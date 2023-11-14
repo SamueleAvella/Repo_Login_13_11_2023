@@ -8,58 +8,79 @@ import java.util.Map;
 
 public class CreazioneAccount {
     private Map<String, Integer> mappaUsername = new HashMap<>();
-    private List<Utente> listaUtenti = new ArrayList<>();
-
+    //private List<Utente> listaUtenti = new ArrayList<>();
+    
 
     //registra un nuovo utente con hashing della password
 
-    public void registraUtente(String nome, String cognome, String email, String nome_utente, String password){
+    public boolean registraUtente(String nome, String cognome, String email, String nomeUtente, String password){
 
-        if(!verificaUnicitaUsername(nome_utente)){
-            System.out.println("Username già esistente. Scegli un altro username.");
-            return;
+
+           // Controllo di nullità per i dati inseriti
+           if (nome == null || cognome == null || email == null || nomeUtente == null || password == null) {
+            System.out.println("Tutti i campi devono essere compilati. Riprova.");
+            return false;
         }
-        //dovrebbe generare il salt ma non riesco a importare la libreria
-        //quindi devo trovare un modo diverso
+
+        // Controllo lunghezza della password
+        if (password.length() < 8) {
+            System.out.println("La password deve contenere almeno 8 caratteri. Riprova.");
+            return false;
+        }
+
+        if(!verificaUnicitaUsername(nomeUtente)){
+            System.out.println("Username già esistente. Scegli un altro username.");
+            return false;
+        }else{
+        //genera il salt 
         String salt = generaSalt();
 
-        // Genera l'hash della password con il salt utilizzando SHA-256
+        //genera l'hash della password con il salt utilizzando SHA-256
         String hashPassword = generaHashPassword(password, salt);
 
-        Utente u1 = new Utente(nome, cognome, email, nome_utente, password);
-        //memorizza l'ID dell'utente e la posizione nell'ArrayList nella mappa
-        int idUtente = listaUtenti.size();
-        mappaUsername.put(nome_utente, idUtente);
+        //la grandezza dell'arraylist si autoincrementa ogni volta
+        //che si aggiunge un utente quindi l'id dell'utente corrisponde
+        //alla sua posizione all'interno della lista
+ 
+        int idUtente = UserManager.getSizeList();
+        //salviamo i dati nella mappa
+        mappaUsername.put(nomeUtente, idUtente);
     
         //aggiungi l'utente all'ArrayList
-        listaUtenti.add(u1);
+        //listaUtenti.add(new Utente(nome, cognome, email, nomeUtente, hashPassword));
 
-        System.out.println("Registrazione riuscita. Benvenuto, " + nome_utente + "!");
+        //controlli
+        //if(nome!=null && cognome!=null, && email!=null && nomeUtente!=null)
+        UserManager.addUser(new Utente(nome, cognome, email, nomeUtente, hashPassword));
 
+        System.out.println("Registrazione riuscita. Benvenuto/a, " + nomeUtente + "!");
+
+        return true;
+        }
     }
      //verifica l'unicità dell'username
-     private boolean verificaUnicitaUsername(String nome_utente) {
-        if (mappaUsername.containsKey(nome_utente)) {
+     private boolean verificaUnicitaUsername(String nomeUtente) {
+        if (mappaUsername.containsKey(nomeUtente)) {
             return false;
         }
         return true;
     }
 
-    // Metodo per generare un nuovo salt (implementazione di base)
+    //metodo per generare un nuovo salt (implementazione di base)
     private String generaSalt() {
-        // Puoi implementare questa funzione in base alle tue esigenze
-        // Per ora, restituiamo una stringa casuale
+        // è modificabile in base alle esigenze
+        //per ora, restituisce una stringa casuale
         return "salt-casuale";
     }
     
-    // Metodo per generare l'hash della password utilizzando SHA-256
+    //metodo per generare l'hash della password utilizzando SHA-256
     private String generaHashPassword(String password, String salt) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             String passwordWithSalt = password + salt;
             byte[] hashBytes = digest.digest(passwordWithSalt.getBytes());
 
-            // Converte il risultato in una rappresentazione esadecimale
+            //converte il risultato in una rappresentazione esadecimale
             StringBuilder hashStringBuilder = new StringBuilder();
             for (byte b : hashBytes) {
                 hashStringBuilder.append(String.format("%02x", b));
