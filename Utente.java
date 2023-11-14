@@ -1,76 +1,63 @@
 import java.time.LocalDate;
 
-class Utente{
-
-    private String username;
-    private String email;
-    private String password;
+public class Utente {
     private String nome;
     private String cognome;
+    private String email;
+    private String nomeUtente;
+    private String password;
     private LocalDate dataNascita;
+    private String residenza;
+    private Genere sesso;
 
-    private Utente(String nome, String cognome, LocalDate dataNascita, String username, String password, String email){
-        this.nome = nome;
-        this.cognome = cognome;
-        this.dataNascita = dataNascita;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Utente(String username, String password, String email){
-        this.nome = "";
-        this.cognome = "";
-        this.dataNascita = null;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-    public LocalDate getDataNascita() {
-        return dataNascita;
-    }
-    public String getEmail() {
-        return email;
+    public Utente(String nome, String cognome, String email, String nomeUtente, String password) {
+        this.nome=nome;
+        this.cognome=cognome;
+        this.email=email;
+        this.nomeUtente=nomeUtente;
+        this.password=password;
     }
     public String getNome() {
         return nome;
     }
-    /*public String getPassword() {
+    public String getCognome() {
+        return cognome;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getNomeUtente() {
+        return nomeUtente;
+    }
+    public String getPassword() {
         return password;
-    }*/
-    public String getUsername() {
-        return username;
     }
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    public LocalDate getDataNascita() {
+        return dataNascita;
     }
-    public void setDataNascita(LocalDate dataNascita) {
-        this.dataNascita = dataNascita;
-    }public void setEmail(String email) {
-        this.email = email;
+    public String getResidenza() {
+        return residenza;
+    }
+    public Genere getSesso() {
+        return sesso;
+
     }
     public void setNome(String nome) {
         this.nome = nome;
     }
-   /*public void setPassword(String password) {
-        this.password = password;
-    }*/
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
     }
-
-    @Override
-    public String toString() {
-        return "Nome: " + nome + " " + cognome + "\n" +
-                "Data Nascita: " + dataNascita + "\n" +
-                "email: " + email + " username: " + username + "\n";
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setNomeUtente(String nomeUtente) {
+        this.nomeUtente = nomeUtente;
+    }
+    public void setSesso(Genere sesso) {
+        this.sesso = sesso;
     }
     
-
-
+    
 }
