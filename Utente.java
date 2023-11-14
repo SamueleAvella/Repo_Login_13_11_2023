@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Utente {
     private String nome;
@@ -41,10 +40,12 @@ public class Utente {
     }
     public Genere getSesso() {
         return sesso;
+
     }
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public void setCognome(String cognome) {
         this.cognome = cognome;
     }
