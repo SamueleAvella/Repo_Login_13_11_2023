@@ -1,42 +1,54 @@
 
-import java.util.Scanner;             // importo lo scanner
 
 public class Login{
+    
+    
+      static int tentativi = 3;
 
-    //creo il metodo per il login
-    public boolean login() throws AccessoNegatoException{   
+     public boolean effettuaLogin(String user, String psw, String hashPsw){
+
+         
         
-         boolean accesso = false;
-         final int TENTATIVI=3;
+     if(UserManager.isConteinedByUser(user)){
 
-        Scanner sc = new Scanner(System.in);                             // creo lo scanner
-
-        System.out.println("inserisci l'username:");
-
-        String usarnameTenativo= sc.nextLine();                          // creo una stringa che contiene l'username preso dallo scanner 
-
-        System.out.println("inserisci la password: ");
-
-        String passwordTentativo = sc.nextLine();                       // creo la stringa che contine la password presa dallo scanner
-        
-        
-        for (int i=0; i< TENTATIVI; i++){
-             //controllo se le stringhe non siano vuote e che siano uguali a quelle della registrazione
-                if((usarnameTenativo != null) && (passwordTentativo != null) /* && 
-                    (.equals(usarnameTenativo))&&(.equals(passwordTentativo))*/){                          
-
-                    System.out.println("benvenuto ");
-
-                    accesso = true;
-                } else {
-
-                    System.out.println("credenziali non valide");
-                }
+      while(tentativi>0){
+        if(Login.checkPassword(psw, hashPsw)){
+            return true;
+        }else{
+            Login.decTentativi();
+            return false;
         }
-
-        if(!accesso){
-            throw  new  AccessoNegatoException(" tentativi finiti, le credenziali che hai inserito non sono valide ");
-        }
-        return accesso;
+       
     }
+  }
+             Utente userLogged=null;
+            Sessione.setUserLogged(userLogged);
+
+
+}
+                                                                     
+    
+           
+    
+    public int getTentativi() {
+        return tentativi;
+    }
+    public static void decTentativi() {
+        tentativi--;
+    }
+
+    public static boolean checkPassword(String psw, String hashPsw){
+
+        
+        psw = CreazioneAccount.generaHashPassword(psw);
+        if (psw.equals(hashPsw)){
+            return true;
+        }else{
+
+        return false;
+    
+    }
+
+  
+}
 }
