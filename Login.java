@@ -1,30 +1,27 @@
-
+import java.util.Map;
 
 public class Login{
     
+    static int tentativi = 3;
     
-      static int tentativi = 3;
-
-     public boolean effettuaLogin(String user, String psw, String hashPsw){
-
-         
-        
-     if(UserManager.isConteinedByUser(user)){
-
-      while(tentativi>0){
-        if(Login.checkPassword(psw, hashPsw)){
-            return true;
-        }else{
-            Login.decTentativi();
-            return false;
+    public static boolean effettuaLogin(String user, String psw){
+        if(UserManager.isContainedByUser(user)){
+            System.out.println("L'utente esiste");
+            Map tempMap = UserManager.getMapByUser(user);
+            System.out.println(tempMap);
+                if(Login.checkPassword((String)tempMap.get("hashpasword"),CreazioneAccount.generaHashPassword(psw, "salt-casuale"))){
+                    System.out.println("Psw combaciano");
+                    Sessione.setUserLogged(UserManager.getMapByUser(user));
+                    return true;
+                }else{
+                    return false;
+                }
         }
-       
-    }
-  }
-             Utente userLogged=null;
-            Sessione.setUserLogged(userLogged);
 
-
+        System.out.println("L'utente non esiste");
+        Sessione.setUserLogged(null);
+        return false;
+        //Sessione.setUserLogged(userLogged);
 }
                                                                      
     
@@ -33,23 +30,13 @@ public class Login{
     public int getTentativi() {
         return tentativi;
     }
-    public static void decTentativi() {
-        tentativi--;
-    }
+    
 
     public static boolean checkPassword(String psw, String hashPsw){
-
-        
-        psw = CreazioneAccount.generaHashPassword(psw);
         if (psw.equals(hashPsw)){
             return true;
-        }else{
-
+        }
         return false;
-    
     }
-
-  
-}
 
 }

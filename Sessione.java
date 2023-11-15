@@ -1,8 +1,9 @@
+import java.util.Map;
 
 class Sessione{
 
     private static Sessione istanza;
-    private static Utente userLogged=null;
+    private static Map userLogged=null;
     
     private Sessione(){}
 
@@ -16,12 +17,12 @@ class Sessione{
         return istanza;
     }
 
-    public static Utente getUserLogged() {
+    public static Map getUserLogged() {
         return userLogged;
     }
 
     //SETTING PER DEFINIRE L'UTENTE LOGGATO
-    public static void setUserLogged(Utente user) {
+    public static void setUserLogged(Map user) {
         userLogged = user;
     }
 

@@ -9,28 +9,28 @@ import java.util.Map;
 
 public class CreazioneAccount {
  
-    private static List<Map> listaUtenti = new ArrayList<>();
-    Map <String, String> nuovaMappa = new HashMap<>();
-
+    //private static List<Map> listaUtenti = new ArrayList<>();
     //registra un nuovo utente con hashing della password
 
     public boolean registraUtente(String nome, String cognome, String email, String nomeUtente, String password){
-
-        // Controllo di nullità per i dati inseriti
-        if (nome == null || cognome == null || email == null || nomeUtente == null || password == null) {
+        
+        Map <String, String> nuovaMappa = new HashMap<>();
+        if (nome.equals("")|| cognome.equals("") || email.equals("")|| nomeUtente.equals("") || password.equals("")) {
             System.out.println("Tutti i campi devono essere compilati. Riprova.");
             return false;
-        }else if (password.length() < 8) {
+        }
+        else if (password.length() < 8) {
             System.out.println("La password deve contenere almeno 8 caratteri. Riprova.");
             return false;
-        }else if(!verificaUnicitaUsername(nuovaMappa, nomeUtente)){
+        }
+        else if(UserManager.isContainedByUser(nomeUtente)){
             System.out.println("Username già esistente. Scegli un altro username.");
             return false;
-        }else{          //devo aggiustare un controllo perché salva anche se l'username è lo stesso
-
-        //dovrebbe generare il salt
+        }
+        else{           //devo aggiustare un controllo perché salva anche se l'username è lo stesso
+                        //dovrebbe generare il salt
         String salt = generaSalt();
-        // Genera l'hash della password con il salt utilizzando SHA-256
+                        // Genera l'hash della password con il salt utilizzando SHA-256
         String hashPassword = generaHashPassword(password, salt);
 
         nuovaMappa.put("nome", nome);
@@ -40,8 +40,8 @@ public class CreazioneAccount {
         nuovaMappa.put("hashpasword", hashPassword);
           
         //aggiungi l'utente all'ArrayList
-        listaUtenti.add(nuovaMappa);
-
+        //listaUtenti.add(nuovaMappa);
+        UserManager.addUser(nuovaMappa);
         System.out.println("Registrazione riuscita. Benvenuto/a, " + nomeUtente + "!");
 
         return true;
@@ -50,12 +50,6 @@ public class CreazioneAccount {
 
 
      //verifica l'unicità dell'username
-     private boolean verificaUnicitaUsername(Map nuovaMappa, String nomeUtente) {
-        if (nuovaMappa.containsValue(nomeUtente)) {
-            return false;
-        }
-        return true;
-    }
 
     // Metodo per generare un nuovo salt (implementazione di base)
     private String generaSalt() {
@@ -65,7 +59,9 @@ public class CreazioneAccount {
     }
     
     // Metodo per generare l'hash della password utilizzando SHA-256
-    private String generaHashPassword(String password, String salt) {
+    static String generaHashPassword(String password, String salt) {
+
+        System.out.println("Generazione...");
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             String passwordWithSalt = password + salt;
@@ -83,11 +79,6 @@ public class CreazioneAccount {
         }
     }
 
-    public void stampaUtenti(){
-        for(int i =0; i<listaUtenti.size(); i++){
-            System.out.println(listaUtenti.get(i));
-        }
-
-    }
+   
     
 }
